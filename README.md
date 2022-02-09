@@ -1,13 +1,11 @@
-# Wordprismic
+## Overview
 
-[![npm](https://img.shields.io/npm/v/wordprismic.svg)](https://npmjs.com/package/wordprismic)
+Generate Prismic import objects from Fearless' Wordpress blog posts
 
-Wordprismic is a small and fully configurable Node utility for importing existing Wordpress blogs into the [Prismic.io](https://prismic.io) content platform.
+This repository was forked from https://github.com/madeleineostoja/wordprismic and modified to fix the original source's generation flow/bugs.
 
 
 ## Requirements
-
-Make sure you meet the following requirements before using the importer:
 
 - Wordpress's REST API enabled (included and auto-enabled in core from WP 4.4+)
 - Both Node 7.6+ and Ruby installed
@@ -17,52 +15,7 @@ Make sure you meet the following requirements before using the importer:
 
 ``` npm run generate ```
 
-## Configuration
-
-Create a JavaScript configuration file with the following properties
-
-Property                            | Description
-------------------------------------|----------------------------------------------------------------------------------------------------------------------------------
-`wordpress.url`                     | The full URL of your wordpress blog
-`prismic.repo`                      | The name of your Prismic repository
-`prismic.locale`                    | The locale of language locale of your imported documents in Prismic (see Settings -> Translations & locales)
-`prismic.categoriesType` (optional) | The content type of post categories in prismic, if available
-`optimizeMediaRequests` (optional)  | Whether to attempt to only fetch required media assets. Shortens import time, but can cause 503 errors on some Wordpress servers.
-`schema`                            | A function to transform Wordpress data to your Prismic content model, see documentation below
-
-```js
-module.exports = {
-  wordpress: {
-    url: 'https://myblog.com'
-  },
-  prismic: {
-    repo: 'myNewBlog',
-    locale: 'en-au',
-    categoriesType: 'category'
-  },
-  optimizeMediaRequests: false,
-  schema: async function(post, html) {
-    return {
-      type: 'post',
-      uid: post.slug,
-      category: {
-        id: post.categories[0].prismic.id,
-        mask: 'category'
-      },
-      author: post.author.name,
-      title: html.decode(post.title.rendered),
-      featured_image: {
-        origin: {
-          url: post.featured_media.guid.rendered
-        },
-        alt: post.featured_media.alt_text
-      },
-      excerpt: await html.parse(post.excerpt.rendered),
-      content: await html.parse(post.content.rendered)
-    };
-  }
-};
-```
+Generated files will be located in the /dist folder
 
 ### Defining your schema
 
@@ -77,29 +30,4 @@ See the Wordpress [Posts API Reference](https://developer.wordpress.org/rest-api
 
 The `html.parse()` function is **asynchronous**, so make sure you `await` it and flag your schema as `async`.
 
-## Importing
-
-You can now run the importer directly from NPM, with the following arguments
-
-Argument          | Description
-------------------|-------------------------------------------------------------------------
-`--config` (`-c`) | Path to your config file
-`--dest` (`-d`)   | Location to save zip archive for imorting, defaults to current directory
-
-```sh
-npx wordprismic -c ./path/to/config.js
-```
-
-Or if you'd prefer, install the module globally first
-
-```sh
-npm i -g wordprismic
-
-wordprismic -c ./path/to/config.js
-```
-
-Your new Prismic posts will be saved to in a folder called `wordprismic-import`. Compress the **contents** (not the folder itself) to a `.zip` archive, then import it to Prismic.
-
 ---
-
-© MIT [Tomorrow](https://www.tomorrowstudio.co)

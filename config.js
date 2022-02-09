@@ -7,11 +7,11 @@ const config = {
   wordpress: {
     url: 'https://fearlessbmore.wpcomstaging.com/'
   },
-  prismic: {
-    repo: 'intro-project',
-    locale: 'en-au',
-    categoriesType: ''
-  },
+  // prismic: {
+  //   repo: 'intro-project',
+  //   locale: 'en-au',
+  //   categoriesType: ''
+  // },
   optimizeMediaRequests: false,
   schema: async function (post, html) {
 
