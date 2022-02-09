@@ -8,7 +8,7 @@ const uuid = require('uuid/v4');
 const { getAllWp, mapCategories, html } = require('../lib/utils');
 const { config, dest } = require('../lib/config');
 
-const OUTPUT_FOLDER = 'wordprismic-import',
+const OUTPUT_FOLDER = 'dist',
   OUTPUT_PATH = path.join(process.cwd(), `${dest}${OUTPUT_FOLDER}`);
 
 (async () => {
@@ -18,7 +18,7 @@ const OUTPUT_FOLDER = 'wordprismic-import',
 
   const users = await getAllWp('users'),
     posts = await getAllWp('posts'),
-    topics = await mapCategories(),
+    // topics = await mapCategories(),
     featuredMedias = optimizeMediaRequests
       ? await getAllWp(
           'media',
@@ -33,9 +33,9 @@ const OUTPUT_FOLDER = 'wordprismic-import',
           media => media.id === featured_media
         ),
         author: users.find(user => user.id === author),
-        categories: categories.map(category =>
-          topics.find(topic => topic.wordpress.id === category)
-        )
+        // categories: categories.map(category =>
+        //   topics.find(topic => topic.wordpress.id === category)
+        // )
       });
 
       return await schema(post, html);
@@ -43,7 +43,8 @@ const OUTPUT_FOLDER = 'wordprismic-import',
     writePost = post =>
       new Promise((resolve, reject) => {
         fs.writeFile(
-          `${OUTPUT_PATH}/new_${uuid()}_${config.prismic.locale}.json`,
+          // `${OUTPUT_PATH}/new_${uuid()}_${config.prismic.locale}.json`,
+          `${OUTPUT_PATH}/${post.uid}.json`,
           JSON.stringify(post, null, 2),
           err => {
             err && reject(err);

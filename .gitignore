@@ -1,7 +1,10 @@
 # Deps
 node_modules
 
+dist/
+
 # Runtime
+.tmp/
 tmp
 *.log
 .DS_Store

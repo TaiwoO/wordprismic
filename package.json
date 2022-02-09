@@ -7,7 +7,8 @@
     "wordprismic": "./bin/index.js"
   },
   "scripts": {
-    "test": "rm -rf ./tmp/wordprismic-import && node ./bin/index.js -c ./tmp/wordprismic.config.js -d ./tmp/"
+    "test": "rm -rf ./tmp/wordprismic-import && node ./bin/index.js -c ./tmp/wordprismic.config.js -d ./tmp/",
+    "generate": "node bin/index.js"
   },
   "repository": {
     "type": "git",
@@ -29,11 +30,15 @@
     "chalk": "^2.4.2",
     "cheerio": "^1.0.0-rc.3",
     "commander": "^2.20.0",
+    "date-fns": "^2.28.0",
     "fetch-paginate": "^3.1.0",
     "he": "^1.2.0",
     "mkdirp": "^0.5.1",
     "node-fetch": "^2.6.0",
     "prismic-javascript": "^2.0.3",
+    "sanitize-html": "^2.6.1",
+    "shelljs": "^0.8.5",
+    "turndown": "^7.1.1",
     "uuid": "^3.3.2"
   }
 }
