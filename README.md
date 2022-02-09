@@ -13,6 +13,10 @@ Make sure you meet the following requirements before using the importer:
 - Both Node 7.6+ and Ruby installed
 - Any Wordpress plugins that add or change content models (eg: Advanced Custom Fields, YOAST, etc) hooked up to the REST API, via plugins or otherwise
 
+## Running the program
+
+``` npm run generate ```
+
 ## Configuration
 
 Create a JavaScript configuration file with the following properties
